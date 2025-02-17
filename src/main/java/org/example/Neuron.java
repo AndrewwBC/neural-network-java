@@ -19,6 +19,11 @@ public class Neuron {
         return (weigth * input) + bias;
     }
 
+    public void gradient(){
+        this.bias -= LEARNING_RATE * this.errorInFunctionOfBias();
+        this.weigth -= LEARNING_RATE * this.errorInFunctionOfWeight();
+    }
+
     public double errorInFunctionOfWeight(){
         return -2*( ( this.getYR() - this.predict()) ) * this.x;
     }
