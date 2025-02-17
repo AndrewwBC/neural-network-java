@@ -7,8 +7,6 @@ public class Neuron {
     private Double bias;
     private Function inputFunction;
 
-    private static final double LEARNING_RATE = 0.001;
-
     public Neuron(Function inputFunction){
         this.inputFunction = inputFunction;
         this.weigth = Math.random();
@@ -19,21 +17,16 @@ public class Neuron {
         return (weigth * (this.inputFunction.x()) ) + bias;
     }
 
-    public void gradient(){
-        this.bias -= LEARNING_RATE * this.errorInFunctionOfBias();
-        this.weigth -= LEARNING_RATE * this.errorInFunctionOfWeight();
-    }
-
-    public double errorInFunctionOfWeight(){
-        return -2*( ( this.getYR() - this.predict()) ) * this.inputFunction.x();
-    }
-
-    public double errorInFunctionOfBias(){
-        return -2*( (this.getYR()  - this.predict()) ) ;
-    }
-
-    public Integer getYR(){
+    public Integer realY(){
         return this.inputFunction.x() + this.inputFunction.Constant();
+    }
+
+    public void setWeigth(Double weigth) {
+        this.weigth = weigth;
+    }
+
+    public void setBias(Double bias) {
+        this.bias = bias;
     }
 
     public Double getWeigth() {

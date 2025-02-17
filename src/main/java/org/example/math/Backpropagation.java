@@ -1,13 +1,22 @@
 package org.example.math;
 
-public class Backpropagation {
+import org.example.utils.WeightAndBiasAdjustment;
 
-    public double errorInFunctionOfWeight(Double realY, Double predict, Integer x){
+public class Backpropagation {
+    private static final double LEARNING_RATE = 0.001;
+    private double errorInFunctionOfWeight(Integer realY, Double predict, Integer x){
         return -2*( ( realY - predict) ) * x;
     }
 
-    public double errorInFunctionOfBias(Double realY, Double predict){
+    private double errorInFunctionOfBias(Integer realY, Double predict){
         return -2*( ( realY - predict) ) ;
+    }
+
+    public WeightAndBiasAdjustment gradient(Double weigth, Double bias, Integer realY, Double predict, Integer x){
+        weigth -= LEARNING_RATE * this.errorInFunctionOfWeight(realY, predict, x);
+        bias -= LEARNING_RATE * this.errorInFunctionOfBias(realY, predict);
+
+        return new WeightAndBiasAdjustment(weigth, bias);
     }
 
 }
