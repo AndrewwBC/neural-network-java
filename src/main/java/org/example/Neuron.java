@@ -25,7 +25,7 @@ public class Neuron {
     }
 
     public double errorInFunctionOfWeight(){
-        return -2*( ( this.getYR() - this.predict()) ) * this.x;
+        return -2*( ( this.getYR() - this.predict()) ) * (-this.x);
     }
 
     public double errorInFunctionOfBias(){
