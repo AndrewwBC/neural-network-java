@@ -7,7 +7,7 @@ public class Neuron {
     private Double bias;
     private Function inputFunction;
 
-    private static final double LEARNING_RATE = 0.1;
+    private static final double LEARNING_RATE = 0.01;
 
     public Neuron(Function inputFunction){
         this.inputFunction = inputFunction;
@@ -25,9 +25,7 @@ public class Neuron {
     }
 
     public double errorInFunctionOfWeight(){
-        var value =  -2*( ( this.getYR() - this.predict()) ) * this.inputFunction.x();
-        System.out.println(value);
-        return value;
+        return -2*( ( this.getYR() - this.predict()) ) * this.inputFunction.x();
     }
 
     public double errorInFunctionOfBias(){
