@@ -8,7 +8,13 @@ public class Training {
         Function inputFunction = new Function(2, 1);
 
         Neuron neuron = new Neuron(inputFunction);
-        System.out.println();
+
+        for (int i = 0; i < 10000 ; i++) {
+            neuron.gradient();
+        }
+
+        System.out.println(neuron.getWeigth() + ", " + neuron.getBias());
+
     }
 
 }

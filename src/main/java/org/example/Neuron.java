@@ -16,7 +16,7 @@ public class Neuron {
     }
 
     public Double predict(){
-        return (weigth * (this.inputFunction.x() + this.inputFunction.Constant()) ) + bias;
+        return (weigth * (this.inputFunction.x()) ) + bias;
     }
 
     public void gradient(){
@@ -25,7 +25,9 @@ public class Neuron {
     }
 
     public double errorInFunctionOfWeight(){
-        return -2*( ( this.getYR() - this.predict()) ) * (-this.x);
+        var value =  -2*( ( this.getYR() - this.predict()) ) * this.inputFunction.x();
+        System.out.println(value);
+        return value;
     }
 
     public double errorInFunctionOfBias(){
@@ -34,6 +36,14 @@ public class Neuron {
 
     public Integer getYR(){
         return this.inputFunction.x() + this.inputFunction.Constant();
+    }
+
+    public Double getWeigth() {
+        return this.weigth;
+    }
+
+    public Double getBias(){
+        return this.bias;
     }
 
 }
