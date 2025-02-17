@@ -1,11 +1,11 @@
 package org.example;
 
-import java.util.List;
-
 public class Neuron {
     private Double weigth;
     private Double bias;
     private Double input;
+
+    private Integer x = 2;
 
     private static final double LEARNING_RATE = 0.1;
 
@@ -19,19 +19,16 @@ public class Neuron {
         return (weigth * input) + bias;
     }
 
+    public double errorInFunctionOfWeight(){
+        return -2*( ( this.getYR() - this.predict()) ) * this.x;
+    }
 
-    public String error(){
-        var x = 2;
+    public double errorInFunctionOfBias(){
+        return -2*( (this.getYR()  - this.predict()) ) ;
+    }
 
-        var YR = x + 1;
-
-        var errorInFunctionOfWeight = -2*( ( YR - this.predict()) ) * x;
-
-        var errorInFunctionOfBias = -2*( (YR - this.predict()) ) ;
-
-        System.out.println(errorInFunctionOfWeight);
-        System.out.println(errorInFunctionOfBias);
-        return "Oi";
+    public Integer getYR(){
+        return this.x + 1;
     }
 
 }
