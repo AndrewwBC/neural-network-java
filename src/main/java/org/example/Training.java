@@ -4,18 +4,17 @@ import org.example.utils.Function;
 
 public class Training {
 
-    public void trainNeuron(){
-        Function inputFunction = new Function(2, 1);
+    private Double oldWeigth;
+    private Double oldBias;
 
+    public void trainNeuron(){
+        Function inputFunction = new Function(4, 1);
         Neuron neuron = new Neuron(inputFunction);
 
-        for (int i = 0; i < 100000 ; i++) {
+        for (int i = 0; i < 10000 ; i++) {
+            System.out.println(neuron.getWeigth() + ", " + neuron.getBias());
             neuron.gradient();
-            System.out.println(neuron.getWeigth());
+            System.out.println(neuron.getWeigth() + ", " + neuron.getBias());
         }
-
-        System.out.println(neuron.getWeigth() + ", " + neuron.getBias());
-
     }
-
 }

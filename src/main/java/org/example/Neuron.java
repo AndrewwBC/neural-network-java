@@ -7,7 +7,7 @@ public class Neuron {
     private Double bias;
     private Function inputFunction;
 
-    private static final double LEARNING_RATE = 0.01;
+    private static final double LEARNING_RATE = 0.001;
 
     public Neuron(Function inputFunction){
         this.inputFunction = inputFunction;
