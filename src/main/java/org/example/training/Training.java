@@ -1,6 +1,7 @@
-package org.example;
+package org.example.training;
 
 import org.example.math.Backpropagation;
+import org.example.neuron.Neuron;
 import org.example.utils.Function;
 import org.example.utils.WeightAndBiasAdjustment;
 

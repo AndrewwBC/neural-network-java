@@ -1,6 +1,6 @@
 package org.example;
 
-import org.example.utils.Function;
+import org.example.training.Training;
 
 public class Main {
     public static void main(String[] args) {

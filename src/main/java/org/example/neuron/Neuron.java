@@ -1,4 +1,4 @@
-package org.example;
+package org.example.neuron;
 
 import org.example.utils.Function;
 
