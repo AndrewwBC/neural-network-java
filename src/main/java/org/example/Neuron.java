@@ -1,22 +1,22 @@
 package org.example;
 
+import org.example.utils.Function;
+
 public class Neuron {
     private Double weigth;
     private Double bias;
-    private Double input;
-
-    private Integer x = 2;
+    private Function inputFunction;
 
     private static final double LEARNING_RATE = 0.1;
 
-    public Neuron(Double weight, Double bias, Double input){
-        this.weigth = weight;
-        this.bias = bias;
-        this.input = input;
+    public Neuron(Function inputFunction){
+        this.inputFunction = inputFunction;
+        this.weigth = Math.random();
+        this.bias = Math.random();
     }
 
     public Double predict(){
-        return (weigth * input) + bias;
+        return (weigth * (this.inputFunction.x() + this.inputFunction.Constant()) ) + bias;
     }
 
     public void gradient(){
@@ -33,7 +33,7 @@ public class Neuron {
     }
 
     public Integer getYR(){
-        return this.x + 1;
+        return this.inputFunction.x() + this.inputFunction.Constant();
     }
 
 }
