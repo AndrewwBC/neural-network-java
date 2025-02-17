@@ -5,10 +5,6 @@ import org.example.utils.Function;
 import org.example.utils.WeightAndBiasAdjustment;
 
 public class Training {
-
-    private Double oldWeigth;
-    private Double oldBias;
-
     public void trainNeuron(){
         Function inputFunction = new Function(4, 1);
         Neuron neuron = new Neuron(inputFunction);
@@ -19,7 +15,8 @@ public class Training {
 
             WeightAndBiasAdjustment weightAndBiasAdjustment = backpropagation.gradient(neuron.getWeigth(), neuron.getBias(), neuron.realY(), neuron.predict(), inputFunction.x());
 
-
+            neuron.setWeigth(weightAndBiasAdjustment.weigth());
+            neuron.setBias(weightAndBiasAdjustment.bias());
 
             System.out.println(neuron.getWeigth() + ", " + neuron.getBias());
         }
