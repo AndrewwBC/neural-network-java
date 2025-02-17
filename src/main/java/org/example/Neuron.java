@@ -8,6 +8,7 @@ public class Neuron {
     private Function inputFunction;
 
     public Neuron(Function inputFunction){
+        // Neuron receive a function as input, search for the record class to understand
         this.inputFunction = inputFunction;
         this.weigth = Math.random();
         this.bias = Math.random();

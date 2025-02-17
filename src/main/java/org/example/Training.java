@@ -10,7 +10,10 @@ public class Training {
         Neuron neuron = new Neuron(inputFunction);
         Backpropagation backpropagation = new Backpropagation();
 
-        for (int i = 0; i < 10000 ; i++) {
+        // epochs to be more IA style ;)
+        var epochs = 10000;
+
+        for (int i = 0; i < epochs; i++) {
             System.out.println(neuron.getWeigth() + ", " + neuron.getBias());
 
             WeightAndBiasAdjustment weightAndBiasAdjustment = backpropagation.gradient(neuron.getWeigth(), neuron.getBias(), neuron.realY(), neuron.predict(), inputFunction.x());
