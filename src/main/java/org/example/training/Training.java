@@ -11,7 +11,7 @@ public class Training {
         Neuron neuron = new Neuron(inputFunction);
         Backpropagation backpropagation = new Backpropagation();
 
-        // epochs to be more IA style ;)
+        // epochs to be more AI style ;)
         var epochs = 10000;
 
         for (int i = 0; i < epochs; i++) {
