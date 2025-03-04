@@ -1,21 +1,17 @@
 package org.example.math.Gauss;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class GaussElimination {
 
-    private int lines = 6;
-    private int columns = 7;
+    private int lines = 4;
+    private int columns = 5;
 
     double[][] array = {
-            {1,2,3,4,0,8,1},
-            {4,5,2,9,1,9,1},
-            {8,9,5,7,0,9,1},
-            {2,5,9,7,1,8,1},
-            {8,0,4,1,6,8,1},
-            {8,0,4,1,6,4,6}
+            {1,2,3,4,4},
+            {4,5,2,9,1},
+            {8,9,5,7,2},
+            {6,9,5,7,2},
     };
     public void loop(){
 
@@ -28,7 +24,39 @@ public class GaussElimination {
             }
             this.math(pivotVector, i);
         }
+        this.unknowns();
     }
+
+    private void unknowns() {
+        // loop para ir da ultima linha ate a primeira
+        for (int i = lines - 1; i >= 0 ; i--) {
+            double sumOfLine = 0;
+            double currentUnknown = 0;
+            double independentTerm = 0;
+
+            // loop para iniciar incognita de baixo
+            for (int j = columns - 2; j >= 0 ; j--) {
+                currentUnknown = this.array[i][i];
+                independentTerm = this.array[i][columns - 1];
+                if(j <= columns -2 && j != i){
+                    sumOfLine += this.array[i][j];
+                }
+
+                //System.out.println(this.array[i][j]);
+            }
+           System.out.println("Soma da linha: " + sumOfLine);
+
+            double valueOfUnknown = (independentTerm + sumOfLine*-1) / currentUnknown;
+            System.out.println(valueOfUnknown);
+
+            for (int j = columns - 2; j >= 0; j--) {
+               // this.showArray();
+                this.array[j][i] *= valueOfUnknown;
+            }
+
+        }
+    }
+
 
     private void math(List<Double> pivotVector, int currentLine){
         List<Double> nextVector = new ArrayList<>();
@@ -55,7 +83,6 @@ public class GaussElimination {
                 array[i][j] = afterMathVector.get(j);
             }
 
-            this.showArray();
         }
     }
 
