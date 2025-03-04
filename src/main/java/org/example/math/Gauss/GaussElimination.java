@@ -4,13 +4,14 @@ import java.util.*;
 
 public class GaussElimination {
 
-    private int lines = 3;
-    private int columns = 4;
+    private int lines = 4;
+    private int columns = 5;
 
     double[][] array = {
-            {1,1,1,6},
-            {2,-1,1,5},
-            {1,2,-1,4},
+            {1,1,1,6,7},
+            {2,-1,1,5,5},
+            {1,2,-1,4,5},
+            {1,2,-1,4,5},
     };
     public void loop(){
 
@@ -22,8 +23,6 @@ public class GaussElimination {
                 pivotVector.add(array[i][j]);
             }
             this.math(pivotVector, i);
-            this.showArray();
-
         }
         this.unknowns();
     }
@@ -46,7 +45,16 @@ public class GaussElimination {
            System.out.println("Soma da linha: " + sumOfLine);
 
             sumOfLine = this.myRound(sumOfLine);
-            double valueOfUnknown = this.myRound((independentTerm + sumOfLine*-1) / currentUnknown);
+
+            double valueOfUnknown;
+
+            if((independentTerm + sumOfLine*-1) == 0 || currentUnknown == 0 ) {
+                valueOfUnknown = 0;
+            } else {
+                valueOfUnknown = this.myRound((independentTerm + sumOfLine*-1) / currentUnknown);
+            }
+
+
             System.out.println(this.myRound(valueOfUnknown));
 
             for (int j = columns - 2; j >= 0; j--) {
@@ -61,6 +69,7 @@ public class GaussElimination {
         List<Double> afterMathVector = new ArrayList<>();
 
         for (int i = currentLine + 1; i < columns; i++) {
+            this.showArray();
             nextVector.clear();
             afterMathVector.clear();
 
@@ -81,6 +90,7 @@ public class GaussElimination {
                 array[i][j] = afterMathVector.get(j);
             }
 
+            this.showArray();
         }
     }
 
