@@ -4,14 +4,13 @@ import java.util.*;
 
 public class GaussElimination {
 
-    private int lines = 4;
-    private int columns = 5;
+    private int lines = 3;
+    private int columns = 4;
 
     double[][] array = {
-            {1,2,3,4,4},
-            {4,5,2,9,1},
-            {8,9,5,7,2},
-            {6,9,5,7,2},
+            {1,1,1,6},
+            {2,-1,1,5},
+            {1,2,-1,4},
     };
     public void loop(){
 
@@ -23,6 +22,8 @@ public class GaussElimination {
                 pivotVector.add(array[i][j]);
             }
             this.math(pivotVector, i);
+            this.showArray();
+
         }
         this.unknowns();
     }
@@ -41,19 +42,16 @@ public class GaussElimination {
                 if(j <= columns -2 && j != i){
                     sumOfLine += this.array[i][j];
                 }
-
-                //System.out.println(this.array[i][j]);
             }
            System.out.println("Soma da linha: " + sumOfLine);
 
-            double valueOfUnknown = (independentTerm + sumOfLine*-1) / currentUnknown;
-            System.out.println(valueOfUnknown);
+            sumOfLine = this.myRound(sumOfLine);
+            double valueOfUnknown = this.myRound((independentTerm + sumOfLine*-1) / currentUnknown);
+            System.out.println(this.myRound(valueOfUnknown));
 
             for (int j = columns - 2; j >= 0; j--) {
-               // this.showArray();
                 this.array[j][i] *= valueOfUnknown;
             }
-
         }
     }
 
@@ -69,14 +67,14 @@ public class GaussElimination {
             if(i >= this.array.length) return;
 
             for (int j = 0; j < Arrays.stream(this.array[0]).count(); j++) {
-                    nextVector.add(array[i][j]);
+                nextVector.add(array[i][j]);
             }
 
             if (pivotVector.get(currentLine) == 0) continue;
-            double m = (double) nextVector.get(currentLine) / pivotVector.get(currentLine);
+            double m = this.myRound(nextVector.get(currentLine) / pivotVector.get(currentLine));
 
             for (int k = 0; k < nextVector.size(); k++) {
-                afterMathVector.add(nextVector.get(k) - (pivotVector.get(k) * m) );
+                afterMathVector.add(this.myRound(nextVector.get(k) - (pivotVector.get(k) * m)));
             }
 
             for (int j = 0; j < Arrays.stream(this.array[0]).count() ; j++) {
@@ -92,9 +90,13 @@ public class GaussElimination {
             for (int k = 0; k < columns; k++) {
                 System.out.print(String.format("%.2f",this.array[j][k]) + " ");
             }
-            System.out.println(); // Quebra de linha após cada linha da matriz
+            System.out.println();
         }
         System.out.println("---------------------");
+    }
+
+    private double myRound(double value) {
+        return Math.ceil((value * 100)) / 100;
     }
 
 }
