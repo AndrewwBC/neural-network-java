@@ -32,6 +32,10 @@ public class GaussElimination {
             }
             this.gaussElimination(pivotVector, i);
         }
+
+        // after the array has been escalonated, we can find the unknowns with this methods
+        // the L method is the beginning of LU Factorization
+
         this.L();
         //this.unknowns();
     }
@@ -108,6 +112,9 @@ public class GaussElimination {
                 this.L[i][j] = this.ls.get(i - 1 + j);
             }
         }
+
+        // the first step is to find Y based on L and B
+
         this.findYArray();
     }
 
@@ -137,8 +144,9 @@ public class GaussElimination {
     }
 
     private void findYArray(){
+        // Y and X can be populated with 1
         this.populateYAndX();
-        Map<String, Double> ys = new HashMap<>();
+
         for (int i = 0; i < lines; i++) {
             double sumOfOthersCoeficients = 0;
             for (int k = 0; k < columns - 2; k++) {
@@ -152,7 +160,6 @@ public class GaussElimination {
             }
             System.out.println(currentY);
             this.Y[i][0] = currentY;
-            ys.put("y" + i, currentY);
         }
 
         this.findXArray();
