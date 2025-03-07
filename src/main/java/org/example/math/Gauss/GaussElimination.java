@@ -17,9 +17,9 @@ public class GaussElimination {
     private double[][] X = new double[lines][1];
     private List<Double> ls = new ArrayList<>();
 
-    // this method will populate de pivotVector list in order to do the math
-    // related do the pivot, and will invoke gaussElimation
-    // to find the pivots of each line after the first
+    // this method will populate the pivotVector list in order to do the math
+    // related do the current pivot, and will invoke gaussElimination
+    // to do the eliminations based on the current pivot
     public void loop(){
 
         List<Double> pivotVector = new ArrayList<>();
