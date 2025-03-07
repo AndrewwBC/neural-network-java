@@ -129,7 +129,7 @@ public class GaussElimination {
         }
 
         for (int i = 0; i <= 2 ; i++) {
-            System.out.println("Valor de x"+i + ": " + this.X[i][0] + "    Valor de Y"+i + ": " + this.Y[i][0]);
+            System.out.println("Valor de x"+i + ": " + myRound(this.X[i][0]) + "    Valor de Y"+i + ": " + this.Y[i][0]);
         }
 
     }
