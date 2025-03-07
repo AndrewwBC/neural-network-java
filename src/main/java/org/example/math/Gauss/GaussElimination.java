@@ -1,6 +1,5 @@
 package org.example.math.Gauss;
 
-import java.sql.Array;
 import java.util.*;
 
 public class GaussElimination {
@@ -17,6 +16,10 @@ public class GaussElimination {
     private double[][] Y = new double[lines][1];
     private double[][] X = new double[lines][1];
     private List<Double> ls = new ArrayList<>();
+
+    // this method will populate de pivotVector list in order to do the math
+    // related do the pivot, and will invoke gaussElimation
+    // to find the pivots of each line after the first
     public void loop(){
 
         List<Double> pivotVector = new ArrayList<>();
@@ -24,11 +27,10 @@ public class GaussElimination {
 
         for (int i = 0; i < lines; i++) {
             pivotVector.clear();
-
             for (int j = 0; j < Arrays.stream(this.array[0]).count(); j++) {
                 pivotVector.add(array[i][j]);
             }
-            this.math(pivotVector, i);
+            this.gaussElimination(pivotVector, i);
         }
         this.L();
         //this.unknowns();
@@ -69,7 +71,7 @@ public class GaussElimination {
         }
     }
 
-    private void math(List<Double> pivotVector, int currentLine){
+    private void gaussElimination(List<Double> pivotVector, int currentLine){
         List<Double> nextVector = new ArrayList<>();
         List<Double> afterMathVector = new ArrayList<>();
 
@@ -177,7 +179,6 @@ public class GaussElimination {
     }
 
     private void showArray(double[][] array) {
-
         System.out.println("---------------------");
         for (int j = 0; j < lines; j++) {
             for (int k = 0; k <  columns - 1; k++) {
