@@ -1,21 +1,27 @@
 package org.example.math.Gauss;
 
+import java.sql.Array;
 import java.util.*;
 
 public class GaussElimination {
-
-    private int lines = 4;
-    private int columns = 5;
-
     double[][] array = {
-            {1,1,1,6,7},
-            {2,-1,1,5,5},
-            {1,2,-1,4,5},
-            {1,2,-1,4,5},
+            {1,1,1,0},
+            {10,-8,0,65},
+            {8,0,-3,120}
     };
+    private int lines = this.array.length;
+    private int columns = this.array.length + 1;
+    private double[][] B = new double[lines][1];
+    private double[][] L = new double[lines][columns - 1];
+    private double[][] U = new double[lines][columns - 1];
+    private double[][] Y = new double[lines][1];
+    private double[][] X = new double[lines][1];
+    private List<Double> ls = new ArrayList<>();
     public void loop(){
 
         List<Double> pivotVector = new ArrayList<>();
+        this.populateB();
+
         for (int i = 0; i < lines; i++) {
             pivotVector.clear();
 
@@ -24,7 +30,8 @@ public class GaussElimination {
             }
             this.math(pivotVector, i);
         }
-        this.unknowns();
+        this.L();
+        //this.unknowns();
     }
 
     private void unknowns() {
@@ -54,7 +61,6 @@ public class GaussElimination {
                 valueOfUnknown = this.myRound((independentTerm + sumOfLine*-1) / currentUnknown);
             }
 
-
             System.out.println(this.myRound(valueOfUnknown));
 
             for (int j = columns - 2; j >= 0; j--) {
@@ -63,13 +69,11 @@ public class GaussElimination {
         }
     }
 
-
     private void math(List<Double> pivotVector, int currentLine){
         List<Double> nextVector = new ArrayList<>();
         List<Double> afterMathVector = new ArrayList<>();
 
         for (int i = currentLine + 1; i < columns; i++) {
-            this.showArray();
             nextVector.clear();
             afterMathVector.clear();
 
@@ -81,6 +85,7 @@ public class GaussElimination {
 
             if (pivotVector.get(currentLine) == 0) continue;
             double m = this.myRound(nextVector.get(currentLine) / pivotVector.get(currentLine));
+            ls.add(m);
 
             for (int k = 0; k < nextVector.size(); k++) {
                 afterMathVector.add(this.myRound(nextVector.get(k) - (pivotVector.get(k) * m)));
@@ -89,16 +94,94 @@ public class GaussElimination {
             for (int j = 0; j < Arrays.stream(this.array[0]).count() ; j++) {
                 array[i][j] = afterMathVector.get(j);
             }
-
-            this.showArray();
         }
     }
 
-    private void showArray(){
+    private void L() {
+        // create identity
+        this.identityOfL();
+
+        for (int i = 1; i < lines ; i++) {
+            for (int j = 0; j < i ; j++) {
+                this.L[i][j] = this.ls.get(i - 1 + j);
+            }
+        }
+        this.findYArray();
+    }
+
+    private void findXArray() {
+        this.U = this.array;
+        this.showArray(U);
+
+        for (int i = lines - 1; i >= 0 ; i--) {
+            double sum = 0;
+            for (int j = columns - 2; j >= i; j--) {
+                if(i != j) {
+                    sum += (this.U[i][j] * this.X[j][0]);
+                }
+            }
+
+            if((this.Y[i][0] + (sum*-1)) == 0 || this.U[i][i] == 0) {
+                this.X[i][0] = 0;
+            } else {
+                this.X[i][0] = (this.Y[i][0] + (sum*-1)) / this.U[i][i];
+            }
+        }
+
+        for (int i = 0; i <= 2 ; i++) {
+            System.out.println("Valor de x"+i + ": " + this.X[i][0] + "    Valor de Y"+i + ": " + this.Y[i][0]);
+        }
+
+    }
+
+    private void findYArray(){
+        this.populateYAndX();
+        Map<String, Double> ys = new HashMap<>();
+        for (int i = 0; i < lines; i++) {
+            double sumOfOthersCoeficients = 0;
+            for (int k = 0; k < columns - 2; k++) {
+                if(k != i) {
+                    sumOfOthersCoeficients += (this.L[i][k]);
+                }
+            }
+            double currentY = (this.B[i][0] - sumOfOthersCoeficients);
+            for (int k = i + 1; k < lines; k++) {
+                this.L[k][i] = this.L[k][i] * currentY;
+            }
+            System.out.println(currentY);
+            this.Y[i][0] = currentY;
+            ys.put("y" + i, currentY);
+        }
+
+        this.findXArray();
+    }
+
+    private void identityOfL(){
+        for (int i = 0; i < lines ; i++) {
+            for (int j = 0; j < columns - 1 ; j++) {
+                this.L[i][j] = i == j ? 1 : 0;
+            }
+        }
+    }
+    private void populateB(){
+        for (int i = 0; i < lines ; i++) {
+            this.B[i][0] = this.array[i][this.array.length];
+        }
+    }
+
+    private void populateYAndX(){
+        for (int i = 0; i < lines ; i++) {
+            this.Y[i][0] = 1;
+            this.X[i][0] = 1;
+        }
+    }
+
+    private void showArray(double[][] array) {
+
         System.out.println("---------------------");
         for (int j = 0; j < lines; j++) {
-            for (int k = 0; k < columns; k++) {
-                System.out.print(String.format("%.2f",this.array[j][k]) + " ");
+            for (int k = 0; k <  columns - 1; k++) {
+                System.out.print(String.format("%.2f", array[j][k]) + " ");
             }
             System.out.println();
         }
